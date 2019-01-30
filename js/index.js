@@ -1,5 +1,8 @@
 // Your code goes here
 
+
+
+
 //random colors array, found online
 const colorsArray = [
     "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177" ,"#0d5ac1" ,
@@ -43,7 +46,8 @@ const colorsArray = [
     "#f812b3", "#b17fc9", "#8d6c2f", "#d3277a", "#2ca1ae", "#9685eb", "#8a96c6",
     "#dba2e6", "#76fc1b", "#608fa4", "#20f6ba", "#07d7f6", "#dce77a", "#77ecca"]
 
-/*1.) Any text on the page can have the text color changed to a random
+/*1.) 'dblclick'
+Any text on the page can have the text color changed to a random
 color if it is double clicked*/
 const bodyContainer = document.querySelector('body');
 //console.log(bodyContainer);
@@ -52,9 +56,14 @@ bodyContainer.addEventListener('dblclick', e=> {
     console.log(`${e.target} color has been changed!`);
 });
 
-/*2.) The nav items will triple in size when hovered over, return to normal when exiting*/
+bodyContainer.addEventListener('click', e=> {
+    console.log(`The body container has been clicked!`);
+});
+
+/*2 + 3.) 'mouseenter' + 'mouseleave'
+The nav items will triple in size when hovered over, return to normal when exiting*/
 const navItems = document.querySelectorAll('.nav .nav-link');
-console.log(navItems);
+//console.log(navItems);
 navItems.forEach(x => {
     x.addEventListener('mouseenter', e => {
         e.currentTarget.style.fontSize = '300%'
@@ -63,18 +72,87 @@ navItems.forEach(x => {
         e.currentTarget.style.fontSize = '1.6rem'
         //default navbar fontsize^^^^^
     });
+    x.addEventListener('click', e => {
+        e.preventDefault();
+//PREVENT DEFAULT^^^^^^^^^
+    });
 });
 
-/*3.) Once you double click all text content,
+/*4.) 'contextmenu'
+Once you double click all text content,
 save electricity by right clicking and entering night mode,
 Right click again to revert to normal*/
 const funBus = document.querySelector('.funBusPage');
+//console.log(funBus);
 funBus.addEventListener('contextmenu', function(e) {
     if (e.currentTarget.style.backgroundColor != 'black' ) {
-    e.currentTarget.style.backgroundColor = 'black';
-    console.log('Night mode activated')
-    } else {
+        e.currentTarget.style.backgroundColor = 'black';
+        console.log('Night mode activated')
+        } else {
         e.currentTarget.style.backgroundColor = 'white';
         console.log('Night mode deactivated')
     }
+    
 });
+
+/*5.) 'dragend'
+Can't remember which content-section image you just dragged? Well now after dragging
+an image from the content-section, that image will be give a solid, red, 3px border.
+ */
+const imgContent = document.querySelectorAll('.funBusPage .img-content');
+//console.log(imgContent);
+imgContent.forEach( x => {
+    x.addEventListener('dragend', e => {
+        e.currentTarget.style.borderColor = 'red';
+        e.currentTarget.style.borderWidth = '3px';
+        e.currentTarget.style.borderStyle = 'solid';
+        console.log(`${e.target} has been dragged.`)
+    });
+});
+
+/*6.) 'copy'
+Will make the font bold for any section that is copied
+*/
+bodyContainer.addEventListener('copy', e=> {
+    e.target.style.fontWeight = 'bold';
+});
+
+/*7 + 8.)'keydown' + 'keyup' 
+Holding any key will increase font size of all text-content text
+Releasing the key will bring font size back to normal.
+***NOT WORKING, DON'T KNOW WHY***
+*/
+const allPs = document.querySelectorAll('.container .text-content');
+console.log(allPs);
+allPs.forEach(x => {
+    x.addEventListener('keydown', e=> {
+        e.target.style.fontSize = '2rem'
+    });
+    x.addEventListener('keyup', e => {
+        e.target.style.fontSize = '1.6rem'
+    });
+});
+
+/*9.) 'click'
+Clicking on a button triggers a log saying someone signed up for a trip
+*/
+const vacaBtns = document.querySelectorAll('.destination .btn');
+//console.log(vacaBtns);
+vacaBtns.forEach(x => {
+    x.addEventListener('click', e => {
+        console.log('Customer has signed up for a Fun Bus Vacation!');
+        e.stopPropagation();
+    });
+});
+
+/*10.) 'wheel'
+boat image should disappear when scrolling, also not working
+similar to other issue, no errors are coming up
+ */
+
+ const boatImg = document.querySelector('.content-destination img');
+ //console.log(boatImg);
+ boatImg.addEventListener('wheel', e => {
+     e.currentTarget.display = 'none';
+ });
+
